@@ -1,0 +1,71 @@
+.DataGrid {
+  direction: rtl;
+  display: flex;
+  margin: 20px;
+  flex-flow: column;
+  overflow: scroll;
+
+  border: 1px solid #f0f2f8;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &--endless {
+    height: 400px;
+  }
+
+  .navigationFooter {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    p {
+      cursor: pointer;
+      color: blue;
+    }
+  }
+
+  th {
+    font-weight: 800;
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: white;
+    padding: 10px;
+  }
+
+  tr {
+    height: 50px;
+    border-bottom: 1px solid #f0f2f8;
+  }
+
+  .selectedRow {
+    background-color: lightskyblue;
+  }
+
+  td {
+    padding: 10px;
+  }
+
+  .alignRight {
+    text-align: right;
+  }
+
+  .alignLeft {
+    text-align: left;
+  }
+
+  .alignCenter {
+    text-align: center;
+  }
+
+  .sortableHeader {
+    cursor: pointer;
+  }
+
+  .showMoreLink {
+    cursor: pointer;
+    color: blue;
+  }
+}

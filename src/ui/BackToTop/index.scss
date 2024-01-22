@@ -1,0 +1,18 @@
+$ImgWidth: 40px;
+
+.BackToTop {
+  z-index: 100;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: $ImgWidth;
+  height: $ImgWidth;
+
+  img {
+    cursor: pointer;
+    width: $ImgWidth;
+    height: $ImgWidth;
+  }
+
+
+}
