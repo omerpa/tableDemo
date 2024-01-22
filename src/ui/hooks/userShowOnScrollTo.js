@@ -17,5 +17,4 @@ const UseShowOnScrollTo = scrollHeight => {
 
     return shown;
 };
-
 export {UseShowOnScrollTo};
