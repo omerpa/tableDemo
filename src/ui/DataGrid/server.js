@@ -1,5 +1,3 @@
-import {sortData} from "./sortUtil";
-
 const Server = {
 
     demoData : [],
@@ -26,7 +24,6 @@ const Server = {
 
         const partialView = Server.demoData.slice(startPos, startPos + numRecords);
 
-        const sortedData = sortData(partialView,0, false)
         return {
             records : partialView,
             numRecords: NumRecords

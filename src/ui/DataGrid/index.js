@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 
 import "./css/index.scss";
 import {AlignType, ColumnType, numberWithCommas} from "./types";
@@ -67,7 +67,7 @@ const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => 
 
     const getAlignment = header => {
 
-        let retAlign = "";
+        let retAlign;
 
         switch (header.alignment) {
             case AlignType.right:

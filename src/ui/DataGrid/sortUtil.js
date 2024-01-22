@@ -23,13 +23,7 @@ const compareDates = (d1, d2) => {
 };
 
 const compareDebtTypes = (itemA, itemB) => {
-    /*
-    const DebtType = {
-    Traffic: 0,
-    Legal: 1,
-    Tax: 2,
-}
-     */
+
     const debtType1 =  itemA[sortBy];
     const debtType2 =  itemB[sortBy];
 
@@ -52,6 +46,9 @@ const compareDebtTypes = (itemA, itemB) => {
                     compareRes = flipSort ? 1 : -1;
                 }
                 break;
+
+            default:
+                console.warn("Debt type not found");
         }
     }
 
@@ -59,7 +56,7 @@ const compareDebtTypes = (itemA, itemB) => {
 };
 
 const sortFunc = (itemA, itemB) => {
-    let compareRes = 0;
+    let compareRes;
     if (compareByFunc) {
         compareRes = compareByFunc(itemA, itemB);
     } else {
