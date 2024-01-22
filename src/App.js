@@ -57,7 +57,8 @@ function App() {
     const serverData = Server.getRecords(0, 10);
 
     return (<div className="App">
-        <DataGrid headers={headers} data = {serverData.records} numRecords={serverData.numRecords} initialViewSize={5} endlessView={false}/>
+        <DataGrid headers={headers} data = {serverData.records} numRecords={serverData.numRecords}
+                  initialViewSize={5} endlessView={window.location.href.search("endless") !== -1}/>
         <BackToTop smoothScroll showAtHeight={100}/>
     </div>);
 }
