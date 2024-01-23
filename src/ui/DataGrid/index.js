@@ -36,7 +36,7 @@ const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => 
     const handleScroll = () => {
         if (hasMoreRecords) {
             if (tableRef.current.offsetHeight + tableRef.current.scrollTop >= tableRef.current.scrollHeight) {
-                const moreData = [...sortedData, ...Server.getRecords(sortedData.length, 10).records];
+                const moreData = [...sortedData, ...Server.getRecords(sortedData.length, PartialViewSize).records];
                 const newSortedData = sortData(moreData, sortBy, flipSort, headers[sortBy].compareFunc);
                 setSortedData(newSortedData);
             }

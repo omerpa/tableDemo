@@ -42,7 +42,6 @@ const convertDebtTypeToStr = debtType => {
 }
 
 const numberWithCommas = number => {
-
     let retNumber;
     if (number === 0) {
         retNumber = number;
