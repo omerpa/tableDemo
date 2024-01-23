@@ -13,7 +13,6 @@ const AlignType = {
     center: 1,
     left: 2,
 };
-
 const DebtType = {
     Traffic: 0,
     Legal: 1,

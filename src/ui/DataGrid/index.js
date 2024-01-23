@@ -1,11 +1,12 @@
 import React, {useState, useRef} from 'react';
 
-import "./css/index.scss";
 import {AlignType, ColumnType, numberWithCommas} from "./types";
 import {sortData} from "./sortUtil";
 import {Server} from "./server";
 import {Animations} from "../animations";
 import {UseIsSmallScreen} from "../hooks/useIsSmallScreen";
+
+import "./css/index.scss";
 
 const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => {
     const [sortBy, setSortBy] = useState(0);
@@ -14,10 +15,12 @@ const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => 
     const [showMore, setShowMore] = useState(initialViewSize !== undefined);
     const [partialViewIndex, setPartialViewIndex] = useState(0);
     const [dataGridKey, setDataGridKey] = useState(0);
+    const [expandedRowUniqueId, setExpandedRowUniqueId] = useState(0);
 
     const UpArrow = "\u25BC";
     const DownArrow = "\u25B2";
     const DownTriangle = "\u25BC";
+    const UpTriangle = "\u25B2";
     const LeftArrow = "\u2190";
     const RightArrow = "\u2192";
     const PartialViewSize = 10;
@@ -96,8 +99,8 @@ const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => 
             const arrowType = flipSort ? DownArrow : UpArrow;
             const headerTitle = `${header.title} ${index === sortBy ? arrowType : ""}`;
             return showColumn ? <th key={index + 999999}
-                       className={`${getAlignment(header)} ${header.sortable ? "sortableHeader" : ""}`}
-                       onClick={() => onSort(index)}>
+                                    className={`${getAlignment(header)} ${header.sortable ? "sortableHeader" : ""}`}
+                                    onClick={() => onSort(index)}>
                 {headerTitle}</th> : "";
         })}
     </tr>;
@@ -107,28 +110,56 @@ const DataGrid = ({headers, data, numRecords, initialViewSize, endlessView}) => 
         setDataGridKey(dataGridKey + 1);
     }
 
+    const openExpander = (index, uniqueId) => {
+        if (expandedRowUniqueId === uniqueId) {
+            setExpandedRowUniqueId(0);
+        } else {
+            setExpandedRowUniqueId(uniqueId);
+        }
+    }
     const populateData = () => sortedData.map((item, index) => {
 
         const uniqueId = item[0];
+        const numColumns = headers.length;
 
-        return <tr className={sortedData[index].selected ? "selectedRow" : ""} key={uniqueId}
-                   onClick={() => selectRow(index)}>
-            {item.map((itemData, headerIndex) => {
-                const header = headers[headerIndex];
-                const showColumn = !isSmallScreen || header.alwaysShow;
+        return <>
+            <tr className={sortedData[index].selected ? "selectedRow" : ""} key={uniqueId}
+                onClick={() => selectRow(index)}>
+                {item.map((itemData, headerIndex) => {
+                    const header = headers[headerIndex];
+                    const showColumn = !isSmallScreen || header.alwaysShow;
 
-                if (showColumn) {
-                    const shouldAddCommas = header.type === ColumnType.Money;
-                    const displayData = header.displayFunc ? header.displayFunc(itemData) : itemData;
-                    return <td key={headerIndex + uniqueId + 1}
-                               className={getAlignment(header)}>{shouldAddCommas ? `\u20AA${numberWithCommas(displayData)}` : displayData}</td>
-                }
-                else {
-                    return "";
-                }
+                    if (showColumn) {
+                        const shouldAddCommas = header.type === ColumnType.Money;
+                        let displayData = header.displayFunc ? header.displayFunc(itemData) : itemData;
+                        if (headerIndex === 0) {
+                            displayData = <p>
+                                <span onClick={event => {
+                                    event.stopPropagation();
+                                    openExpander(index, uniqueId)
+                                }
+                                }>
+                                {(expandedRowUniqueId !== uniqueId) ? DownTriangle : UpTriangle}
+                            </span> {displayData}
+                            </p>;
+                        }
+                        return <td key={headerIndex + uniqueId + 1}
+                                   className={getAlignment(header)}>
+                            {shouldAddCommas ? `\u20AA${numberWithCommas(displayData)}` : displayData}
+                        </td>
+                    } else {
+                        return "";
+                    }
 
-            })}
-        </tr>
+                })}
+            </tr>
+            <tr className={(expandedRowUniqueId === uniqueId) ? "showRow" : "hideRow"} id={uniqueId}
+                key={Math.pow(uniqueId, 2)}>
+                <td colSpan={numColumns}><img className="expandDemoImg"
+                                              src="https://static.wixstatic.com/media/da3fd9_7070a699f8034c0f8f2131b38f5661e6~mv2.jpg"/>
+                </td>
+            </tr>
+        </>
     });
 
     const cancelPartialView = () => {

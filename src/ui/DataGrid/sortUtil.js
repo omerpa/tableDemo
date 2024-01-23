@@ -3,7 +3,6 @@ import {DebtType} from "./types";
 let sortBy = 0;
 let compareByFunc = undefined;
 let flipSort = false;
-
 const strToDate = date => {
     const pattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     const arrayDate = date.match(pattern);
@@ -21,7 +20,6 @@ const compareDates = (d1, d2) => {
         return 0;
     }
 };
-
 const compareDebtTypes = (itemA, itemB) => {
 
     const debtType1 =  itemA[sortBy];
@@ -29,6 +27,7 @@ const compareDebtTypes = (itemA, itemB) => {
 
     let compareRes = 0;
     if (debtType1 !== debtType2) {
+
         switch (debtType1) {
             case DebtType.Traffic:
                 compareRes = flipSort ? -1 : 1;
@@ -40,10 +39,10 @@ const compareDebtTypes = (itemA, itemB) => {
 
             case DebtType.Tax:
                 if(debtType2 === DebtType.Traffic) {
-                    compareRes = flipSort ? -1 : 1;
+                    compareRes = flipSort ? 1 : -1;
                 }
                 else {
-                    compareRes = flipSort ? 1 : -1;
+                    compareRes = flipSort ? -1 : 1;
                 }
                 break;
 

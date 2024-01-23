@@ -15,7 +15,7 @@ const Server = {
 
     getRecords : (startPos = 0, numRecords = 10) => {
 
-        const NumRecords = 30;
+        const NumRecords = 100;
         if (Server.demoData.length === 0) {
             for (let i = 0; i < NumRecords; i++) {
                 Server.demoData.push(Server.generateDemoRecord());

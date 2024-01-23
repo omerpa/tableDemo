@@ -20,6 +20,7 @@
     display: flex;
     flex-flow: row;
     justify-content: space-evenly;
+
     p {
       cursor: pointer;
       color: blue;
@@ -67,5 +68,16 @@
   .showMoreLink {
     cursor: pointer;
     color: blue;
+  }
+
+  .expandDemoImg {
+    width: 100%;
+  }
+
+  .hideRow {
+    display: none;
+  }
+  .showRow {
+    display: table-row;
   }
 }
